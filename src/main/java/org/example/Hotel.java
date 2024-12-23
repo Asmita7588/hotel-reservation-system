@@ -1,5 +1,9 @@
 package org.example;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
+
 public class Hotel {
     private String name;
     private int regularWeekdayRate;
@@ -23,10 +27,24 @@ public class Hotel {
         return regularWeekendRate;
     }
 
+    public int calculateTotalCost(List<LocalDate> dates){
+        int totalCost = 0;
+        for(LocalDate date :dates) {
+            DayOfWeek day = date.getDayOfWeek();
+            if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
+                totalCost += regularWeekendRate;
+            } else {
+                totalCost += regularWeekdayRate;
+            }
+        }
+     return totalCost;
+    }
+
     @Override
     public String toString() {
-        return "Hotel{name='" + name + "', regularWeekdayRate=" + regularWeekdayRate +
-                ", regularWeekendRate=" + regularWeekendRate + "}";
+        return "Hotel{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
 
