@@ -1,4 +1,5 @@
 package org.example;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -10,7 +11,7 @@ public class HotelReservationSystem {
         hotels = new ArrayList<>();
     }
 
-    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate, int rating) {
+    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate ,int rating) {
         Hotel hotel = new Hotel(name, regularWeekdayRate, regularWeekendRate, rating);
         hotels.add(hotel);
         System.out.println("Added Hotel: " + hotel);
@@ -31,6 +32,48 @@ public class HotelReservationSystem {
         Hotel cheapestHotel = Collections.min(hotels, Comparator.comparingInt(hotels ->hotels.calculateTotalCost(dates)));
         int totalCost = cheapestHotel.calculateTotalCost(dates);
      return cheapestHotel.getName() + " , TotalRates $ = "+totalCost;
+    }
+
+    public Hotel findCheapestBestRatedHotel(String[] dateRange, String customerType) {
+        int minCost = Integer.MAX_VALUE;
+        Hotel cheapestBestRatedHotel = null;
+
+        for (Hotel hotel : hotels) {
+            int totalCost = calculateTotalCostForRatedHotel(hotel, dateRange, customerType);
+
+            if (totalCost < minCost || (totalCost == minCost && (cheapestBestRatedHotel == null || hotel.getRating() > cheapestBestRatedHotel.getRating()))) {
+                minCost = totalCost;
+                cheapestBestRatedHotel = hotel;
+            }
+        }
+        return cheapestBestRatedHotel;
+    }
+
+    int calculateTotalCostForRatedHotel(Hotel hotel, String[] dateRange, String customerType) {
+        int totalCost = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMyyyy");
+
+        for (String date : dateRange) {
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+
+            if (customerType.equalsIgnoreCase("Regular")) {
+                totalCost += (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+                        ? hotel.getRegularWeekendRate() : hotel.getRegularWeekdayRate();
+            }
+        }
+        return totalCost;
+    }
+
+    public void displayResult(Hotel hotel, String[] dateRange, String customerType) {
+        if (hotel != null) {
+            int totalCost = calculateTotalCostForRatedHotel(hotel, dateRange, customerType);
+            System.out.println("Cheapest Best Rated Hotel: " + hotel.getName() +
+                    ", Rating: " + hotel.getRating() +
+                    ", Total Rates: $" + totalCost);
+        } else {
+            System.out.println("No suitable hotel found.");
+        }
     }
 
     public void displayHotels() {
