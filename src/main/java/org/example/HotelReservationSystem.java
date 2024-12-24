@@ -49,6 +49,19 @@ public class HotelReservationSystem {
         return cheapestBestRatedHotel;
     }
 
+    public Hotel findBestRatedHotel(String[] dateRange, String customerType) {
+        Hotel bestRatedHotel = null;
+        int highestRating = 0;
+
+        for (Hotel hotel : hotels) {
+            if (hotel.getRating() > highestRating) {
+                highestRating = hotel.getRating();
+                bestRatedHotel = hotel;
+            }
+        }
+        return bestRatedHotel;
+    }
+
     int calculateTotalCostForRatedHotel(Hotel hotel, String[] dateRange, String customerType) {
         int totalCost = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMyyyy");

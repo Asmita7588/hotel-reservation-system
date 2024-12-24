@@ -20,7 +20,7 @@ public class Main
         String[] dateRange = {"11Sep2020", "12Sep2020"};
         String customerType = "Regular";
 
-        Hotel bestHotel = reservationSystem.findCheapestBestRatedHotel(dateRange, customerType);
+        Hotel bestHotel = reservationSystem.findBestRatedHotel(dateRange, customerType);
         if (bestHotel != null) {
             System.out.println("Cheapest Best Rated Hotel: " + bestHotel.getName() +
                     ", Rating: " + bestHotel.getRating() +
