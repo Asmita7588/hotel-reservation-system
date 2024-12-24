@@ -10,8 +10,8 @@ public class HotelReservationSystemTest {
         HotelReservationSystem reservationSystem = new HotelReservationSystem();
 
         //add hotel
-        reservationSystem.addHotel("Lakewood", 110, 90);
-        reservationSystem.addHotel("Bridgewood", 160, 60);
+        reservationSystem.addHotel("Lakewood", 110, 90,3);
+        reservationSystem.addHotel("Bridgewood", 160, 60,4);
 
         // to check hotel count added
         assertEquals(2, reservationSystem.hotels.size());

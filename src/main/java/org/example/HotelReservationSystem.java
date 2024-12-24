@@ -10,8 +10,8 @@ public class HotelReservationSystem {
         hotels = new ArrayList<>();
     }
 
-    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate) {
-        Hotel hotel = new Hotel(name, regularWeekdayRate, regularWeekendRate);
+    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate, int rating) {
+        Hotel hotel = new Hotel(name, regularWeekdayRate, regularWeekendRate, rating);
         hotels.add(hotel);
         System.out.println("Added Hotel: " + hotel);
     }

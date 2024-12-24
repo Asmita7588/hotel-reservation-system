@@ -6,9 +6,9 @@ public class Main
 
         HotelReservationSystem reservationSystem = new HotelReservationSystem();
 
-        reservationSystem.addHotel("Lakewood", 110, 90);
-        reservationSystem.addHotel("Bridgewood", 150, 50);
-        reservationSystem.addHotel("Ridgewood", 220, 150);
+        reservationSystem.addHotel("Lakewood", 110, 90, 3);
+        reservationSystem.addHotel("Bridgewood", 150, 50, 4);
+        reservationSystem.addHotel("Ridgewood", 220, 150, 5);
 
         //to display
         reservationSystem.displayHotels();

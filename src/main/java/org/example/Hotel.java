@@ -8,15 +8,27 @@ public class Hotel {
     private String name;
     private int regularWeekdayRate;
     private int regularWeekendRate;
+    private int rating;
 
-    public Hotel(String name, int regularWeekdayRate, int regularWeekendRate) {
+    public Hotel(String name, int regularWeekdayRate, int regularWeekendRate, int rating) {
         this.name = name;
         this.regularWeekdayRate = regularWeekdayRate;
         this.regularWeekendRate = regularWeekendRate;
+        this.rating= rating;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "name='" + name + '\'' +
+                ", regularWeekdayRate=" + regularWeekdayRate +
+                ", regularWeekendRate=" + regularWeekendRate +
+                ", rating=" + rating +
+                '}';
     }
 
     public int getRegularWeekdayRate() {
@@ -25,6 +37,10 @@ public class Hotel {
 
     public int getRegularWeekendRate() {
         return regularWeekendRate;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public int calculateTotalCost(List<LocalDate> dates){
@@ -40,11 +56,5 @@ public class Hotel {
      return totalCost;
     }
 
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 }
 
