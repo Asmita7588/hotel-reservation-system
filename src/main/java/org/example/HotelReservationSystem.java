@@ -11,8 +11,8 @@ public class HotelReservationSystem {
         hotels = new ArrayList<>();
     }
 
-    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate ,int rating) {
-        Hotel hotel = new Hotel(name, regularWeekdayRate, regularWeekendRate, rating);
+    public void addHotel(String name, int regularWeekdayRate, int regularWeekendRate, int rewardWeekdayRate, int rewardWeekendRate, int rating) {
+        Hotel hotel = new Hotel(name, regularWeekdayRate, regularWeekendRate, rewardWeekdayRate, rewardWeekendRate, rating);
         hotels.add(hotel);
         System.out.println("Added Hotel: " + hotel);
     }
@@ -89,6 +89,13 @@ public class HotelReservationSystem {
         }
     }
 
+    public void displayHotelsWithLoyaltyRates() {
+        System.out.println("Hotels with Reward Customer Rates:");
+        for (Hotel hotel : hotels) {
+            System.out.println(hotel.getName() + " - Weekday Rate: $" + hotel.getRewardWeekdayRate() +
+                    ", Weekend Rate: $" + hotel.getRewardWeekendRate());
+        }
+    }
     public void displayHotels() {
         if (hotels.isEmpty()) {
             System.out.println("No hotels available.");

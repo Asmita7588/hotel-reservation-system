@@ -6,12 +6,12 @@ public class Main
 
         HotelReservationSystem reservationSystem = new HotelReservationSystem();
 
-        reservationSystem.addHotel("Lakewood", 110, 90, 3);
-        reservationSystem.addHotel("Bridgewood", 150, 50, 4);
-        reservationSystem.addHotel("Ridgewood", 220, 150, 5);
+        reservationSystem.addHotel("Lakewood", 110, 90, 80,80, 3);
+        reservationSystem.addHotel("Bridgewood", 150, 50, 110, 50, 4);
+        reservationSystem.addHotel("Ridgewood", 220, 150, 100, 40,  5);
 
         //to display
-      //  reservationSystem.displayHotels();
+        reservationSystem.displayHotelsWithLoyaltyRates();
 
        // String result = reservationSystem.findCheapestHotel("11Sep2020", "12Sep2020");
       //  System.out.println("Cheapest Hotel: " + result);
