@@ -14,13 +14,13 @@ public class Main
         reservationSystem.displayHotelsWithLoyaltyRates();
 
        // String result = reservationSystem.findCheapestHotel("11Sep2020", "12Sep2020");
-      //  System.out.println("Cheapest Hotel: " + result);
+        //System.out.println("Cheapest Hotel: " + result);
 
 
         String[] dateRange = {"11Sep2020", "12Sep2020"};
         String customerType = "Regular";
 
-        Hotel bestHotel = reservationSystem.findBestRatedHotel(dateRange, customerType);
+        Hotel bestHotel = reservationSystem.findCheapestBestRatedHotel(dateRange, customerType);
         if (bestHotel != null) {
             System.out.println("Cheapest Best Rated Hotel: " + bestHotel.getName() +
                     ", Rating: " + bestHotel.getRating() +
@@ -29,6 +29,6 @@ public class Main
             System.out.println("No suitable hotel found.");
         }
 
-        //reservationSystem.displayResult(bestHotel, dateRange,customerType);
+       // reservationSystem.displayResult(bestHotel, dateRange,customerType);
     }
 }

@@ -72,7 +72,7 @@ public class HotelReservationSystem {
 
             if (customerType.equalsIgnoreCase("Regular")) {
                 totalCost += (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
-                        ? hotel.getRegularWeekendRate() : hotel.getRegularWeekdayRate();
+                        ? hotel.getRewardWeekendRate() : hotel.getRewardWeekdayRate();
             }
         }
         return totalCost;
