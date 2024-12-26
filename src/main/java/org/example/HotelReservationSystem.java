@@ -20,21 +20,21 @@ public class HotelReservationSystem {
         System.out.println("Added Hotel: " + hotel);
     }
 
-    public List<LocalDate> parseDates(String... dateStrings){
-        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("ddMMMyyyy");
+    public List<LocalDate> parseDates(String... dateStrings) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMyyyy");
         List<LocalDate> dates = new ArrayList<>();
 
-        for(String date : dateStrings){
+        for (String date : dateStrings) {
             dates.add(LocalDate.parse(date, formatter));
         }
         return dates;
     }
 
-    public String findCheapestHotel( String... dateString){
+    public String findCheapestHotel(String... dateString) {
         List<LocalDate> dates = parseDates(dateString);
-        Hotel cheapestHotel = Collections.min(hotels, Comparator.comparingInt(hotels ->hotels.calculateTotalCost(dates)));
+        Hotel cheapestHotel = Collections.min(hotels, Comparator.comparingInt(hotels -> hotels.calculateTotalCost(dates)));
         int totalCost = cheapestHotel.calculateTotalCost(dates);
-     return cheapestHotel.getName() + " , TotalRates $ = "+totalCost;
+        return cheapestHotel.getName() + " , TotalRates $ = " + totalCost;
     }
 
     public Hotel findCheapestBestRatedHotel(String[] dateRange, String customerType) {
@@ -133,7 +133,7 @@ public class HotelReservationSystem {
                     .orElse(null);
 
             if (bestRatedCheapestHotel != null) {
-                int totalCost = calculateTotalCostForRatedHotel(bestRatedCheapestHotel, dateRange,"Regular");
+                int totalCost = calculateTotalCostForRatedHotel(bestRatedCheapestHotel, dateRange, "Regular");
                 System.out.println("Cheapest Best Rated Hotel: " + bestRatedCheapestHotel.getName() +
                         ", Rating: " + bestRatedCheapestHotel.getRating() +
                         ", Total Rates: $" + totalCost);
@@ -145,6 +145,41 @@ public class HotelReservationSystem {
         }
     }
 
+    public String findCheapestBestRatedHotelForRegular(String[] dateRange) {
+        for (String date : dateRange) {
+            if (!isValidDate(date)) {
+                throw new IllegalArgumentException("Invalid date in input: " + date);
+            }
+        }
+
+
+        return hotels.stream()
+                .map(hotel -> new HotelCost(hotel, calculateTotalCost(hotel, dateRange)))
+                .sorted(Comparator.comparingInt(HotelCost::getTotalCost)
+                        .thenComparing((hc1, hc2) -> Integer.compare(hc2.getHotel().getRating(), hc1.getHotel().getRating())))
+                .findFirst()
+                .map(hc -> hc.getHotel().getName() + ", Rating: " + hc.getHotel().getRating() + ", Total Rates: $" + hc.getTotalCost())
+                .orElse("No hotels available");
+    }
+
+    public int calculateTotalCost(Hotel hotel, String[] dateRange) {
+        int totalCost = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMMyyyy");
+
+        for (String date : dateRange) {
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            switch (localDate.getDayOfWeek()) {
+                case SATURDAY:
+                case SUNDAY:
+                    totalCost += hotel.getRegularWeekendRate();
+                    break;
+                default:
+                    totalCost += hotel.getRegularWeekdayRate();
+                    break;
+            }
+        }
+        return totalCost;
+    }
     public void displayHotels() {
         if (hotels.isEmpty()) {
             System.out.println("No hotels available.");
