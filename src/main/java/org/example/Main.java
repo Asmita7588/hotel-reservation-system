@@ -11,7 +11,7 @@ public class Main
         reservationSystem.addHotel("Ridgewood", 220, 150, 100, 40,  5);
 
         //to display
-        reservationSystem.displayHotelsWithLoyaltyRates();
+       // reservationSystem.displayHotelsWithLoyaltyRates();
 
        // String result = reservationSystem.findCheapestHotel("11Sep2020", "12Sep2020");
         //System.out.println("Cheapest Hotel: " + result);
@@ -20,15 +20,16 @@ public class Main
         String[] dateRange = {"11Sep2020", "12Sep2020"};
         String customerType = "Regular";
 
-        Hotel bestHotel = reservationSystem.findCheapestBestRatedHotel(dateRange, customerType);
-        if (bestHotel != null) {
-            System.out.println("Cheapest Best Rated Hotel: " + bestHotel.getName() +
-                    ", Rating: " + bestHotel.getRating() +
-                    ", Total Rates: $" + reservationSystem.calculateTotalCostForRatedHotel(bestHotel, dateRange, customerType));
-        } else {
-            System.out.println("No suitable hotel found.");
-        }
+//        Hotel bestHotel = reservationSystem.findCheapestBestRatedHotel(dateRange, customerType);
+//        if (bestHotel != null) {
+//            System.out.println("Cheapest Best Rated Hotel: " + bestHotel.getName() +
+//                    ", Rating: " + bestHotel.getRating() +
+//                    ", Total Rates: $" + reservationSystem.calculateTotalCostForRatedHotel(bestHotel, dateRange, customerType));
+//        } else {
+//            System.out.println("No suitable hotel found.");
+//        }
 
        // reservationSystem.displayResult(bestHotel, dateRange,customerType);
+        reservationSystem.findCheapestBestRatedHotelUsingStream(dateRange);
     }
 }

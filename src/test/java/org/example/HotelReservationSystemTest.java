@@ -10,12 +10,14 @@ public class HotelReservationSystemTest {
         HotelReservationSystem reservationSystem = new HotelReservationSystem();
 
         //add hotel
-        reservationSystem.addHotel("Lakewood", 110, 90,3);
-        reservationSystem.addHotel("Bridgewood", 160, 60,4);
+        reservationSystem.addHotel("Lakewood", 110, 90, 80,80,3);
+        reservationSystem.addHotel("Bridgewood", 160, 60, 110, 50,4);
 
         // to check hotel count added
         assertEquals(2, reservationSystem.hotels.size());
         assertEquals("Lakewood", reservationSystem.hotels.get(0).getName());
         assertEquals(110, reservationSystem.hotels.get(0).getRegularWeekdayRate());
+
+
     }
 }

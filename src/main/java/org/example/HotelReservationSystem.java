@@ -2,7 +2,10 @@ package org.example;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HotelReservationSystem {
     public List<Hotel> hotels;
@@ -96,6 +99,52 @@ public class HotelReservationSystem {
                     ", Weekend Rate: $" + hotel.getRewardWeekendRate());
         }
     }
+
+    private boolean isValidDate(String date) {
+        String regex = "\\d{1,2}[A-Za-z]{3}\\d{4}";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(date);
+        return matcher.matches();
+    }
+
+
+    public void findCheapestBestRatedHotelUsingStream(String[] dateRange) {
+        try {
+            for (String date : dateRange) {
+                if (!isValidDate(date)) {
+                    throw new IllegalArgumentException("Invalid date format: " + date);
+                }
+            }
+
+            Hotel bestRatedCheapestHotel = hotels.stream()
+                    .map(hotel -> {
+                        int totalCost = calculateTotalCostForRatedHotel(hotel, dateRange, "Regular");
+                        return new HotelCost(hotel, totalCost);
+                    })
+                    .filter(hotelCost -> hotelCost.totalCost < Integer.MAX_VALUE)
+                    .sorted((h1, h2) -> {
+                        if (h1.totalCost != h2.totalCost) {
+                            return Integer.compare(h1.totalCost, h2.totalCost);
+                        }
+                        return Integer.compare(h2.hotel.getRating(), h1.hotel.getRating());
+                    })
+                    .findFirst()
+                    .map(hotelCost -> hotelCost.hotel)
+                    .orElse(null);
+
+            if (bestRatedCheapestHotel != null) {
+                int totalCost = calculateTotalCostForRatedHotel(bestRatedCheapestHotel, dateRange,"Regular");
+                System.out.println("Cheapest Best Rated Hotel: " + bestRatedCheapestHotel.getName() +
+                        ", Rating: " + bestRatedCheapestHotel.getRating() +
+                        ", Total Rates: $" + totalCost);
+            } else {
+                System.out.println("No suitable hotel found.");
+            }
+        } catch (IllegalArgumentException | DateTimeParseException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void displayHotels() {
         if (hotels.isEmpty()) {
             System.out.println("No hotels available.");
